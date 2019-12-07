@@ -1,0 +1,72 @@
+{% load movie_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+</head>
+<body>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Year Start</th>
+                <th>Year End</th>
+                <th>Runtime Minutes</th>
+                <th>Genres</th>
+                <th>Directed By</th>
+                <th>Actors</th>
+                <th># Episodes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ movie.primary_title }}</td>
+                    <td>{{ movie.title_type }}</td>
+                    <td>{{ movie.start_year }}</td>
+                    <td>{% if movie.end_year %}{{ movie.end_year }}{% else %}-{% endif %}</td>
+                    <td>{% if movie.runtime_minutes %}{{ movie.runtime_minutes }}{% else %}-{% endif %}</td>
+                    <td>
+                        {% for genre in movie.genres.all %}
+                            {{ genre.name }}{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ movie | get_director }}</td>
+                    <td>{{ movie | get_actors }}</td>
+{#                    <td>{% for director in movies.directors %}{{ director.primary_name }}{% endfor %}</td>#}
+{#                    <td>{% for actor in movies.actors %}{{ actor.primary_name }}{% endfor %}</td>#}
+                    <td>
+                        {% if movie.episodes.count > 0 %}
+                            {{ movie.episodes.count }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?cursor={{ next_cursor }}&direction=before">Prev</a></li>
+    {% else %}
+      <li class="disabled"><span>Prev</span></li>
+    {% endif %}
+      <li>||</li>
+    {% if page_obj.has_next %}
+      <li><a href="?cursor={{ next_cursor }}&direction=after">Next</a></li>
+    {% else %}
+      <li class="disabled"><span>Next</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+</body>
+</html>

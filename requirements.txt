@@ -1,0 +1,15 @@
+Django==2.2.8
+django-debug-toolbar==2.1
+djangorestframework==3.10.3
+numpy==1.17.4
+pandas==0.25.3
+progressbar2==3.47.0
+psycopg2==2.8.4
+psycopg2-binary==2.8.4
+python-dateutil==2.8.1
+python-dotenv==0.10.3
+python-utils==2.3.0
+pytz==2019.3
+six==1.13.0
+sqlparse==0.3.0
+xlrd==1.2.0
