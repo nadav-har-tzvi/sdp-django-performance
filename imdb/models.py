@@ -57,11 +57,6 @@ class Title(models.Model):
     def actors(self):
         return self.titlecrew_set.filter(category__name__in=['actor', 'actress', 'self'])
 
-    # class Meta:
-    #     index_together = [
-    #         ['start_year', 'id']
-    #     ]
-
 
 class TitleGenre(models.Model):
 
