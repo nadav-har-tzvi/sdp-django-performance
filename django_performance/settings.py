@@ -27,7 +27,7 @@ SECRET_KEY = '-7c=ig4!&4#8+$&0+p9&nv7wvr)ut=^-=80#&1s$7k9+@hfq1i'
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
+IMDB_DATASET_LOCATION = os.path.abspath(os.path.expanduser(os.environ['IMDB_DATASET_LOCATION']))
 
 # Application definition
 
@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'django_performance.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ['DB_ENGINE'],
-        'HOST': os.environ['DB_HOST'],
-        'NAME': os.environ['DB_NAME'],
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'NAME': os.getenv('DB_NAME', 'imdb'),
         'USER': os.environ['DB_USER'],
         'PASSWORD': os.environ['DB_PASSWORD']
     }

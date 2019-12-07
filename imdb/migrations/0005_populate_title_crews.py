@@ -3,6 +3,7 @@ import csv
 import os
 
 import progressbar
+from django.conf import settings
 from django.db import migrations
 
 
@@ -17,7 +18,7 @@ def populate_title_crews(apps, *args, **kwargs):
     TitleCrew = apps.get_model('imdb', 'TitleCrew')
     profession_by_name = {p.name: p for p in Profession.objects.all()}
     num_scanned = 0
-    with open(os.path.expanduser('~/Downloads/title.principals.tsv')) as f:
+    with open(os.path.join(settings.IMDB_DATASET_LOCATION, 'title.principals.tsv')) as f:
         reader = csv.DictReader(f, delimiter='\t')
         bar = progressbar.progressbar(reader)
         title_crews = []

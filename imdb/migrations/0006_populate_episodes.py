@@ -3,6 +3,7 @@ import csv
 import os
 
 import progressbar
+from django.conf import settings
 from django.db import migrations
 
 DB_BATCH_SIZE = 500000
@@ -14,7 +15,7 @@ def populate_episodes(apps, *args, **kwargs):
     TitleEpisode = apps.get_model('imdb', 'TitleEpisode')
 
     num_scanned = 0
-    with open(os.path.expanduser('~/Downloads/title.episode.tsv')) as f:
+    with open(os.path.join(settings.IMDB_DATASET_LOCATION, 'title.episode.tsv')) as f:
         reader = csv.DictReader(f, delimiter='\t')
         bar = progressbar.progressbar(reader)
         title_episodes = []

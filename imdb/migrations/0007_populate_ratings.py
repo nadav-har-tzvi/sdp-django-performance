@@ -3,6 +3,7 @@ import csv
 import os
 
 import progressbar
+from django.conf import settings
 from django.db import migrations
 
 
@@ -14,7 +15,7 @@ def populate_ratings(apps, *args, **kwargs):
     Title = apps.get_model('imdb', 'Title')
     TitleRating = apps.get_model('imdb', 'TitleRating')
     titles_by_tconst = {t.tconst: t for t in Title.objects.all()}
-    with open(os.path.expanduser('~/Downloads/title.ratings.tsv')) as f:
+    with open(os.path.join(settings.IMDB_DATASET_LOCATION, 'title.ratings.tsv')) as f:
         reader = csv.DictReader(f, delimiter='\t')
         bar = progressbar.progressbar(reader)
         title_ratings = []

@@ -3,6 +3,7 @@ import csv
 import os
 
 import progressbar
+from django.conf import settings
 from django.db import migrations
 
 
@@ -18,7 +19,7 @@ def populate_crew(apps, *args, **kwargs):
     crew_members_batch = []
     professions_by_crew_member = {}
     num_batches_persisted = 0
-    with open(os.path.expanduser('~/Downloads/name.basics.tsv'), encoding='utf-8') as f:
+    with open(os.path.join(settings.IMDB_DATASET_LOCATION, 'name.basics.tsv'), encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter='\t')
         bar = progressbar.progressbar(reader)
         for row in bar:
