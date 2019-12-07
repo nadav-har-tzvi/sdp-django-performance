@@ -176,7 +176,7 @@ class TitlesListViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [filters.OrderingFilter]
 
     ordering_fields = ['id']
-    ordering = ['id']
+    ordering = ['start_year', 'id']
     serializer_class = TitleSerializer
     pagination_class = TitlesPageNumberPaginator
     queryset = Title.objects.exclude(title_type='tvEpisode')
