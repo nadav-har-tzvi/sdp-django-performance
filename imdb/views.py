@@ -225,15 +225,17 @@ class TitlesListViewSet(viewsets.ReadOnlyModelViewSet):
 
 
     def get_queryset(self):
-        return Title.objects.exclude(title_type='tvEpisode').prefetch_related(
-            'genres',
-            'episodes',
-            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name='director')
-                     .select_related('category')
-                     .prefetch_related(Prefetch('member', CrewMember.objects.all())), to_attr='directors'),
-            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name__in=['actor', 'actress', 'self'])
-                     .select_related('category')
-                     .prefetch_related(
-                     Prefetch('member', CrewMember.objects.all())),
-                     to_attr='actors')
+        return Title.objects.exclude(title_type='tvEpisode')\
+                            .only('primary_title', 'start_year', 'genres')\
+                            .prefetch_related(
+                            'genres',
+                            'episodes',
+                            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name='director')
+                                     .select_related('category')
+                                     .prefetch_related(Prefetch('member', CrewMember.objects.only('primary_name'))), to_attr='directors'),
+                            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name__in=['actor', 'actress', 'self'])
+                                     .select_related('category')
+                                     .prefetch_related(
+                                Prefetch('member', CrewMember.objects.defer('nconst', 'birth_year', 'death_year', 'professions'))),
+                                     to_attr='actors')
         )
