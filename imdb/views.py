@@ -178,7 +178,7 @@ class TitlesListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = ['id']
     ordering = ['start_year', 'id']
     serializer_class = TitleSerializer
-    pagination_class = TitlesPageNumberPaginator
+    pagination_class = TitlesCursorPaginator
 
     def _get_episodes_by_series(self, title_ids):
         episodes_by_title = defaultdict(list)
