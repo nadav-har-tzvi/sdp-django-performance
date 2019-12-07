@@ -179,7 +179,6 @@ class TitlesListViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ['start_year', 'id']
     serializer_class = TitleSerializer
     pagination_class = TitlesPageNumberPaginator
-    queryset = Title.objects.exclude(title_type='tvEpisode')
 
     def _get_episodes_by_series(self, title_ids):
         episodes_by_title = defaultdict(list)
@@ -225,16 +224,16 @@ class TitlesListViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 
-    # def get_queryset(self):
-    #     return Title.objects.exclude(title_type='tvEpisode').prefetch_related(
-    #         'genres',
-    #         'episodes',
-    #         Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name='director')
-    #                  .select_related('category')
-    #                  .prefetch_related(Prefetch('member', CrewMember.objects.only('primary_name'))), to_attr='directors'),
-    #         Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name__in=['actor', 'actress', 'self'])
-    #                  .select_related('category')
-    #                  .prefetch_related(
-    #                  Prefetch('member', CrewMember.objects.defer('nconst', 'birth_year', 'death_year', 'professions'))),
-    #                  to_attr='actors')
-    #     )
+    def get_queryset(self):
+        return Title.objects.exclude(title_type='tvEpisode').prefetch_related(
+            'genres',
+            'episodes',
+            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name='director')
+                     .select_related('category')
+                     .prefetch_related(Prefetch('member', CrewMember.objects.all())), to_attr='directors'),
+            Prefetch('titlecrew_set', TitleCrew.objects.filter(category__name__in=['actor', 'actress', 'self'])
+                     .select_related('category')
+                     .prefetch_related(
+                     Prefetch('member', CrewMember.objects.all())),
+                     to_attr='actors')
+        )

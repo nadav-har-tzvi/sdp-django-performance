@@ -48,15 +48,6 @@ class Title(models.Model):
     crew = models.ManyToManyField(CrewMember, through='TitleCrew', related_name='titles')
     episodes = models.ManyToManyField('Title', through='TitleEpisode')
 
-
-    @property
-    def directors(self):
-        return self.titlecrew_set.filter(category__name='director')
-
-    @property
-    def actors(self):
-        return self.titlecrew_set.filter(category__name__in=['actor', 'actress', 'self'])
-
     class Meta:
         index_together = [
             ['start_year', 'id']
