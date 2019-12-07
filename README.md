@@ -47,7 +47,7 @@ python manage.py runserver localhost:<port>
 # e.g. python manage.py runserver localhost:8005
 ```
 6. To validate this works, open a browser and go to `http://localhost:<port>/api`. It should take about 2 minutes to load. If everything worked, you should see the following page:
-<iframe src="https://drive.google.com/file/d/196nXtdAZkFlMxHDwOI_ypvQVG61491yn/preview" width="640" height="480"></iframe>
+![Titles API](https://drive.google.com/uc?export=view&id=196nXtdAZkFlMxHDwOI_ypvQVG61491yn)
 
 ## How to use this repository
 This repository is supposed to lead the developer through a set of steps needed to optimize the Titles API.
