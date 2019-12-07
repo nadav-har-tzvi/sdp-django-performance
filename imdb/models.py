@@ -40,7 +40,7 @@ class Title(models.Model):
     title_type = models.CharField(max_length=32)
     primary_title = models.CharField(max_length=512)
     original_title = models.CharField(max_length=512)
-    is_adult = models.BooleanField(default=False)
+    is_adult = models.BooleanField(default=False, db_index=True)
     start_year = models.IntegerField(null=True)
     end_year = models.IntegerField(null=True)
     runtime_minutes = models.IntegerField(null=True)
@@ -56,6 +56,11 @@ class Title(models.Model):
     @property
     def actors(self):
         return self.titlecrew_set.filter(category__name__in=['actor', 'actress', 'self'])
+
+    class Meta:
+        index_together = [
+            ['start_year', 'id']
+        ]
 
 
 class TitleGenre(models.Model):
