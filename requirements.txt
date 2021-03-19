@@ -1,6 +1,6 @@
 Django==2.2.8
 django-debug-toolbar==2.1
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 numpy==1.17.4
 pandas==0.25.3
 progressbar2==3.47.0
